@@ -36,7 +36,7 @@ Projet réalisé en partenariat avec le laboratoire **BIORECA** (Martinique) dan
 - **Espèces invasives** : 4 espèces à risque élevé identifiées
 
 ## Structure du dépôt
-classification-vegetale/ 
+classification-vegetale/  
 ├── data/ # Données brutes (non incluses ici)  
 ├── notebooks/ # Notebooks Jupyter d’analyse  
 ├── src/ # Scripts Python (prétraitement, modèles, visualisations)  
