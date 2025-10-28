@@ -37,11 +37,11 @@ Projet réalisé en partenariat avec le laboratoire **BIORECA** (Martinique) dan
 
 ## Structure du dépôt
 classification-vegetale/ 
-├── data/ # Données brutes (non incluses ici) 
-├── notebooks/ # Notebooks Jupyter d’analyse 
-├── src/ # Scripts Python (prétraitement, modèles, visualisations) 
-├── figures/ # Graphiques et cartes générés 
-├── rapport_scientifique.txt 
+├── data/ # Données brutes (non incluses ici)  
+├── notebooks/ # Notebooks Jupyter d’analyse  
+├── src/ # Scripts Python (prétraitement, modèles, visualisations)  
+├── figures/ # Graphiques et cartes générés  
+├── rapport_scientifique.txt  
 └── README.md
 
 
