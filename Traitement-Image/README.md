@@ -22,8 +22,15 @@ Ce projet a été réalisé dans le cadre de mon Master en Intelligence Artifici
 - `BERNARD_TD_Image.h` : définitions des structures et fonctions
 - `*.bmp` : images d’entrée et de sortie
 
-## ▶️ Exécution
+## Exécution
 
 Compiler le programme :
 ```bash
 gcc BERNARD_TD_Image.c -o traitement
+
+## Auteur
+
+**Alexy Bernard**  
+Master 2 Intelligence Artificielle – Université des Antilles  
+Martinique / Guadeloupe  
+alexybernard.ab@gmail.com
