@@ -27,7 +27,7 @@ Ce projet a été réalisé dans le cadre de mon Master en Intelligence Artifici
 Compiler le programme :
 ```bash
 gcc BERNARD_TD_Image.c -o traitement
-
+```
 ## Auteur
 
 **Alexy Bernard**  
