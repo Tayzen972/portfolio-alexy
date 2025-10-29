@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+ <head>
+   <meta charset="utf-8">
+   <title>Lost in Space</title>
+   <script src="lost_in_space.js" type="text/javascript"></script>
+   <style>
+    html, body { margin: 0px; padding: 0px; width: 100%; height: 100%; }
+    body {background-color: black; background-size: cover; overflow: hidden; }
+    img {max-width: 100px; height: 100px;}
+    canvas {
+      background-color: black;
+    }
+   </style>
+ </head>
+ <body>
+ <canvas id="game_area"
+          width="1600"
+          height="1600">
+  </canvas>
+
+
+  <script type="text/javascript">
+    // Attributions des éléments
+    var interval_alien = 30
+    var alien1 = new Elements("alien1.png", 0, 0);
+    var alien2 = new Elements("alien1.png", -150, 0);
+    var alien3 = new Elements("alien1.png", -300, 0);
+    var alien4 = new Elements("alien1.png", document.body.clientWidth, 0);
+    var alien5 = new Elements("alien1.png", document.body.clientWidth+150, 0);
+    var alien6 = new Elements("alien1.png", document.body.clientWidth+300, 0);
+    var missile = new Elements("missile2_1.png", 0, 0);
+    missile.display = "none";
+    var vaisseau = new Elements("vaisseau.png", document.body.clientWidth/2, document.body.clientHeight-100);
+    var compt = 0;
+    var victoire = 300
+    // Animation Missile
+    function animeMissile( missile ) {
+      missile.top -= 10;
+      if ( missile.top < - missile.element.height) {
+        missile.stopAnimation();
+        missile.display = "none";
+      };
+      // Collision Missile/Alien
+      
+      for (var i=1; i<=6; i++){
+        var alien = window["alien"+i]
+        if (alien.display == "none") continue;
+        if (missile.collision(alien)){
+            compt+=1
+            missile.stopAnimation();
+            missile.display = "none";
+            alien.stopAnimation;
+            alien.display = "none";
+            if (compt == victoire){
+              for (var i=1; i<=6; i++){
+                var alien = window["alien"+i]
+                if (alien.display == "none"){
+                  continue;
+                  }
+                alien.display = "none";
+                }
+                const canvas = document.getElementById("game_area");
+                const context = canvas.getContext("2d");
+                context.fillStyle = "yellow";
+                context.font = "80pt Arial";
+                context.fillText("VICTOIRE", document.body.clientWidth/2-400, document.body.clientHeight/2);
+            }
+            return true
+        }
+        if (alien1.display == 'none'){
+          alien1 = new Elements("alien1.png", 0, 0);
+          alien1.startAnimation(alienBasD, interval_alien)
+        }
+        else if (alien2.display == 'none'){
+          alien2 = new Elements("alien1.png", document.body.clientWidth, 0);
+          alien2.startAnimation(alienBasD, interval_alien)
+        }
+        else if (alien3.display == 'none'){
+          alien3 = new Elements("alien1.png", 0, 0);
+          alien3.startAnimation(alienBasD, interval_alien)
+        }
+        else if (alien4.display == 'none'){
+          alien4 = new Elements("alien1.png", document.body.clientWidth, 0);
+          alien4.startAnimation(alienBasD, interval_alien)
+        }
+        else if (alien5.display == 'none'){
+          alien5 = new Elements("alien1.png", 0, 0);
+          alien5.startAnimation(alienBasD, interval_alien)
+        }
+        else if (alien6.display == 'none'){
+          alien6 = new Elements("alien1.png", document.body.clientWidth, 0);
+          alien6.startAnimation(alienBasD, interval_alien)
+        }
+      }
+    }
+    // Collision Alien/Vaisseau
+    // Animation Alien
+    function alienBasD( alien ){
+      /**
+      if (alien.collision(vaisseau)){
+        alien.stopAnimation();
+        //close();
+        console.log("clack1")
+      }
+      **/
+      alien.left += 10;
+      if (alien.left > document.body.clientWidth - alien.element.width && alien.top > document.body.clientHeight - alien.element.height){
+        alien.startAnimation( alienHautG, interval_alien )
+      }
+      else if (alien.left < 0 && alien.top > document.body.clientHeight - alien.element.height){
+        alien.startAnimation( alienHautD, interval_alien )
+      }
+      else if (alien.left > document.body.clientWidth - alien.element.width && alien.top == 0 ) {
+        alien.top += alien.element.clientHeight;
+        alien.startAnimation( alienBasG, interval_alien );
+      }
+      else if (alien.left > document.body.clientWidth - alien.element.width ) {
+        alien.top += alien.element.clientHeight;
+        alien.startAnimation( alienBasG, interval_alien );
+      };
+    };
+
+    function alienHautG( alien ){
+      /**
+      if (alien.collision(vaisseau)){
+        alien.stopAnimation();
+        console.log("clack2")
+        //close();
+      }
+      **/
+      if ( alien.top > document.body.clientHeight - alien.element.height ) {
+        alien.top -= alien.element.clientHeight;
+        alien.startAnimation( alienHautG, interval_alien );
+      };
+      alien.left -= 10;
+      if (alien.left > document.body.clientWidth - alien.element.width && alien.top == 0 ) {
+        alien.top += alien.element.clientHeight;
+        alien.startAnimation( alienBasG, interval_alien );
+      }
+      else if (alien.left < 0 ) {
+        alien.top -= alien.element.clientHeight;
+        alien.startAnimation( alienHautD, interval_alien );
+      };
+    };
+
+    function alienBasG( alien ){
+      /**
+      if (alien.collision(vaisseau)){
+        alien.stopAnimation();
+        console.log("clack3")
+        //close();
+      }
+      **/
+      alien.left -= 10;
+      if (alien.left > document.body.clientWidth - alien.element.width && alien.top > document.body.clientHeight - alien.element.height){
+        alien.startAnimation( alienHautG, interval_alien )
+      }
+      else if (alien.left < 0 && alien.top > document.body.clientHeight - alien.element.height){
+        alien.startAnimation( alienHautD, interval_alien )
+      }
+      else if (alien.left < 0 ) {
+        alien.top += alien.element.clientHeight;
+        alien.startAnimation( alienBasD, interval_alien );
+      }
+    };
+
+    function alienHautD( alien ){
+      /**
+      if (alien.collision(vaisseau)){
+        alien.stopAnimation();
+        //close();
+        console.log("clack4")
+      }
+      **/
+      if ( alien.top > document.body.clientHeight - alien.element.height ) {
+        alien.top -= alien.element.clientHeight;
+        alien.startAnimation( alienHautD, interval_alien );
+      };
+      alien.left += 10;
+      if (alien.left > document.body.clientWidth - alien.element.width && alien.top == 0 ) {
+        alien.top += alien.element.clientHeight;
+        alien.startAnimation( alienBasG, interval_alien );
+      }
+      else if (alien.left > document.body.clientWidth - alien.element.width ) {
+        alien.top -= alien.element.clientHeight;
+        alien.startAnimation( alienHautG, interval_alien );
+      };
+    };
+
+    // Gestionnaire d'évenements
+    document.onkeydown = function( event ) {
+      // console.log( event.keyCode );
+
+      if (event.keyCode == 38) {                // Haut
+        vaisseau.top -= 10;
+        for (var i=1; i<=6; i++){
+        var alien = window["alien"+i]
+        if (alien.display == "none"){
+          continue;
+          }
+        if (alien.collision(vaisseau)){
+        alien.stopAnimation();
+        console.log("clack2")
+        vaisseau.display = "none"
+        for (var i=1; i<=6; i++){
+        var alien = window["alien"+i]
+        if (alien.display == "none"){
+          continue;
+          }
+          alien.display = "none";
+        }
+        const canvas = document.getElementById("game_area");
+        const context = canvas.getContext("2d");
+        context.fillStyle = "red";
+        context.font = "80pt Arial";
+        context.fillText("Game Over", document.body.clientWidth/2-400, document.body.clientHeight/2);
+          };
+        };
+      };
+
+      if (event.keyCode == 40) {                // Bas
+        vaisseau.top += 10;
+        for (var i=1; i<=6; i++){
+        var alien = window["alien"+i]
+        if (alien.display == "none"){
+          continue;
+          }
+        if (alien.collision(vaisseau)){
+        alien.stopAnimation();
+        console.log("clack2")
+        vaisseau.display = "none"
+        for (var i=1; i<=6; i++){
+        var alien = window["alien"+i]
+        if (alien.display == "none"){
+          continue;
+          }
+          alien.display = "none";
+        }
+        const canvas = document.getElementById("game_area");
+        const context = canvas.getContext("2d");
+        context.fillStyle = "red";
+        context.font = "80pt Arial";
+        context.fillText("Game Over", document.body.clientWidth/2-400, document.body.clientHeight/2);
+          };
+        };
+      };
+
+      if (event.keyCode == 37) {                // Gauche
+        vaisseau.left -= 10;
+        for (var i=1; i<=6; i++){
+        var alien = window["alien"+i]
+        if (alien.display == "none"){
+          continue;
+          }
+        if (alien.collision(vaisseau)){
+        alien.stopAnimation();
+        console.log("clack2")
+        vaisseau.display = "none"
+        for (var i=1; i<=6; i++){
+        var alien = window["alien"+i]
+        if (alien.display == "none"){
+          continue;
+          }
+          alien.display = "none";
+        }
+        const canvas = document.getElementById("game_area");
+        const context = canvas.getContext("2d");
+        context.fillStyle = "red";
+        context.font = "80pt Arial";
+        context.fillText("Game Over", document.body.clientWidth/2-400, document.body.clientHeight/2);
+          };
+        };
+      };
+
+      if (event.keyCode == 39) {                // Droite
+        vaisseau.left += 10;
+        for (var i=1; i<=6; i++){
+        var alien = window["alien"+i]
+        if (alien.display == "none"){
+          continue;
+          }
+        if (alien.collision(vaisseau)){
+        alien.stopAnimation();
+        console.log("clack2")
+        vaisseau.display = "none"
+        for (var i=1; i<=6; i++){
+        var alien = window["alien"+i]
+        if (alien.display == "none"){
+          continue;
+          }
+          alien.display = "none";
+        }
+        const canvas = document.getElementById("game_area");
+        const context = canvas.getContext("2d");
+        context.fillStyle = "red";
+        context.font = "80pt Arial";
+        context.fillText("Game Over", document.body.clientWidth/2-400, document.body.clientHeight/2);
+        //close();
+          };
+        };
+      }
+
+      if (event.keyCode == 32) {                // Tirer = Espace
+        if (missile.display == "none") {
+          //let missile = new Elements("missile.png", 0, 0);
+          missile.display = "block";
+          missile.left = vaisseau.left + (vaisseau.element.width - missile.element.width) / 2;
+          missile.top = vaisseau.top - vaisseau.element.height;
+          missile.startAnimation( animeMissile, 20 );
+          };
+        };
+
+      // Bloquage du vaisseau à gauche et à droite de la page
+      if (vaisseau.left < 0) {
+        vaisseau.left = 0;
+      };
+      if ( vaisseau.left > document.body.clientWidth - vaisseau.element.width) {
+        vaisseau.left = document.body.clientWidth - vaisseau.element.width ;
+      };
+
+      // Bloquage du vaisseau en Haut et bas de page
+      if (vaisseau.top < 0) {
+        vaisseau.top = 0;
+      };
+      if ( vaisseau.top > document.body.clientHeight - vaisseau.element.height) {
+        vaisseau.top = document.body.clientHeight- vaisseau.element.height ;
+      };
+    };
+
+    alien1.startAnimation( alienBasD, interval_alien);
+    alien2.startAnimation( alienBasD, interval_alien);
+    alien3.startAnimation( alienBasD, interval_alien);
+    alien4.startAnimation( alienBasD, interval_alien);
+    alien5.startAnimation( alienBasD, interval_alien);
+    alien6.startAnimation( alienBasD, interval_alien);
+
+  </script>
+ </body>
+</html>
